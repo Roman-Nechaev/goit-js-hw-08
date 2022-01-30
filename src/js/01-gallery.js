@@ -6,8 +6,6 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 console.log(galleryItems);
 
-// Change code below this line
-
 const galleryListRef = document.querySelector('.gallery');
 galleryListRef.addEventListener('click', onOpenModal);
 
