@@ -1,50 +1,53 @@
 import throttle from 'lodash.throttle';
 
-const FEEDBACK_FORM_KEY = 'feedback-form-state'; // /хранилише для мыла и текста /
-
 const refs = {
   form: document.querySelector('.feedback-form'),
-  input: document.querySelector('.feedback-form input'),
+  input: document.querySelector('.feedback-form'),
   textarea: document.querySelector('.feedback-form textarea'),
 };
-// throttle(, 500)
+
+const FEEDBACK_FORM_KEY = 'feedback-form-state'; // /хранилише для мыла и текста /
 onTextArealFormOutput();
-
-refs.form.addEventListener('submit', onFormSubmit);
-
-refs.input.addEventListener('input', onfullForm);
-
-refs.form.addEventListener('input', throttle(onfullForm, 500));
-
 const formData = {};
 
+refs.form.addEventListener('submit', onFormSubmit);
+// refs.input.addEventListener('input', onfullForm);
+refs.form.addEventListener('input', throttle(onfullForm, 500));
+
 function onfullForm(event) {
+  //   formData[event.target.name] = event.target.value;
   formData[event.target.name] = event.target.value;
-  //   console.log(formData);
 
-  const foo = JSON.stringify(formData);
-  localStorage.setItem(FEEDBACK_FORM_KEY, foo);
-
-  //   JSON.parse(FEEDBACK_FORM_KEY);
-  //   JSON.stringify(savedTextForm);
+  localStorage.setItem(FEEDBACK_FORM_KEY, JSON.stringify(formData));
+  console.log(formData);
 }
 
 function onFormSubmit(event) {
   event.preventDefault();
 
   event.currentTarget.reset();
+
+  const savedTextForm = localStorage.getItem(FEEDBACK_FORM_KEY);
+  const obgForm = JSON.parse(savedTextForm);
+
   localStorage.removeItem(FEEDBACK_FORM_KEY);
+  console.log('Отправка формы:', obgForm);
 }
 
 function onTextArealFormOutput(event) {
-  const savedTextForm = localStorage.getItem(FEEDBACK_FORM_KEY);
+  localStorage.getItem(FEEDBACK_FORM_KEY);
 
-  //   const beeTest = JSON.parse(savedTextForm);
+  const savetForm = {
+    email: refs.form.email.value,
+    message: refs.form.message.value,
+  };
+  // const beeTest = JSON.parse(savetForm);
+  //   const dog = JSON.parse(savetForm);
 
-  if (savedTextForm) {
-    refs.input.value = savedTextForm;
-
-    refs.textarea.value = savedTextForm;
+  if (savetForm) {
+    refs.form.email.value = savetForm;
+    refs.form.message.value = savetForm;
+    console.log(savetForm);
   }
 }
 
