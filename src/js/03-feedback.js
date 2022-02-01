@@ -17,7 +17,7 @@ function onfullForm(event) {
   formData[event.target.name] = event.target.value;
 
   localStorage.setItem(FEEDBACK_FORM_KEY, JSON.stringify(formData));
-  //   console.log(formData);
+  // console.log(formData);
 }
 // =======  get_localStorage =========
 function onTextArealFormOutput(event) {
